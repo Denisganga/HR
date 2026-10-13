@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HRImara — AI-Powered HR Platform</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.4/dist/framer-motion.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css?v=hrimara-login-logo-7"/>
+</head>
+<body>
+<!-- Login Screen -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-bg-shapes">
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+  </div>
+  <div class="login-card glass">
+    <div class="login-logo">
+      <img class="login-brand-image" src="hrimara-logo.png?v=1" alt="HRImara AI" width="240" height="220"/>
+      <p>AI-Powered HR Platform for Public Universities</p>
+    </div>
+    <div class="login-form">
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="loginEmail" placeholder="admin@university.edu" onkeydown="if(event.key==='Enter')doLogin()"/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
+      </div>
+      <div class="form-group">
+        <label>Role</label>
+        <select id="loginRole">
+          <option value="admin">Admin</option>
+          <option value="hr">HR Manager</option>
+          <option value="employee">Employee</option>
+        </select>
+      </div>
+      <button class="btn-primary btn-full" onclick="doLogin()">
+        <span class="btn-text">Sign In</span>
+        <span class="btn-icon">→</span>
+      </button>
+      <div style="margin-top:20px;padding:14px 16px;background:#1e293b;border:1px solid #334155;border-radius:8px;font-size:12px;color:#64748b;line-height:2;">
+        <strong style="color:#94a3b8;display:block;margin-bottom:4px;">Demo Credentials</strong>
+        🔵 Admin &nbsp;&nbsp;— admin@university.edu / Admin@2026<br/>
+        🟡 HR Mgr — hr@university.edu / HRManager@2026<br/>
+        🟢 Employee — s.chen@uni.edu / Sarah@2026
+      </div>
+    </div>
+    <div class="login-footer">
+      <span class="badge badge-ai">🧠 AI-Enhanced</span>
+      <span class="badge badge-secure">🔐 Secure</span>
+      <span class="badge badge-live">🟢 Live</span>
+    </div>
+  </div>
+</div>
+
+<!-- Main App -->
+<div id="app" class="app hidden">
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo sidebar-brand"><img class="sidebar-brand-image" src="hrimara-logo.png?v=1" alt="HRImara AI" width="180" height="150"/></div>
+      <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">☰</button>
+    </div>
+    <nav class="sidebar-nav" id="sidebarNav">
+      <!-- Rendered dynamically based on role after login -->
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-avatar" id="sidebarAvatar">A</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarName">Admin User</div>
+          <div class="user-role" id="sidebarRole">Administrator</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">⏻</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h2 class="page-title" id="pageTitle">Dashboard</h2>
+        <div class="breadcrumb" id="breadcrumb">Home / Dashboard</div>
+      </div>
+      <div class="topbar-right">
+        <div class="search-box">
+          <span>🔍</span>
+          <input type="text" placeholder="Search employees, reports..."/>
+        </div>
+        <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+        <div class="notif-btn" onclick="toggleNotifications()">
+          🔔<span class="notif-badge">3</span>
+        </div>
+        <div class="topbar-avatar" id="topbarAvatar">A</div>
+      </div>
+    </header>
+
+    <!-- Notifications Panel -->
+    <div id="notifPanel" class="notif-panel hidden">
+      <div class="notif-header"><h4>Notifications</h4><button onclick="toggleNotifications()">✕</button></div>
+      <div class="notif-item unread"><span class="notif-dot"></span><div><strong>New applicant</strong><p>John Doe applied for Lecturer position</p><small>2 min ago</small></div></div>
+      <div class="notif-item unread"><span class="notif-dot"></span><div><strong>Survey completed</strong><p>Q1 Pulse Survey results are ready</p><small>1 hr ago</small></div></div>
+      <div class="notif-item unread"><span class="notif-dot"></span><div><strong>AI Alert</strong><p>High turnover risk detected in Dept. CS</p><small>3 hr ago</small></div></div>
+      <div class="notif-item"><span class="notif-dot read"></span><div><strong>Leave approved</strong><p>Your leave request was approved</p><small>Yesterday</small></div></div>
+    </div>
+
+    <!-- Pages Container -->
+    <div class="pages-container" id="pagesContainer">
+    </div>
+  </main>
+</div>
+
+<!-- AI Chatbot -->
+<div id="chatbot" class="chatbot hidden">
+  <div class="chat-header">
+    <div class="chat-avatar">🤖</div>
+    <div><strong>HR Assistant</strong><small>AI-Powered</small></div>
+    <button onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot">
+      <div class="msg-bubble">Hi! I'm your AI HR Assistant. Ask me anything about HR policies, leave, performance, or onboarding! 👋</div>
+    </div>
+  </div>
+  <div class="chat-input-area">
+    <input type="text" id="chatInput" placeholder="Ask HR anything..." onkeydown="if(event.key==='Enter')sendChat()"/>
+    <button onclick="sendChat()">➤</button>
+  </div>
+</div>
+<button class="chat-fab" onclick="toggleChat()">🤖</button>
+
+<script src="app.js?v=hrimara-login-logo-7"></script>
+</body>
+</html>
