@@ -98,12 +98,12 @@ async function geminiDirect(prompt) {
 /* ===== SAMPLE DATA ===== */ /* v2 */
 const DATA = {
   employees: [
-    {id:1,name:"Dr. Sarah Chen",role:"Associate Professor",dept:"Computer Science",email:"s.chen@uni.edu",status:"Active",performance:92,engagement:88,risk:"Low",joined:"2019-03-15",avatar:"SC"},
-    {id:2,name:"Prof. James Okafor",role:"Senior Lecturer",dept:"Engineering",email:"j.okafor@uni.edu",status:"Active",performance:85,engagement:72,risk:"Medium",joined:"2017-08-01",avatar:"JO"},
-    {id:3,name:"Dr. Aisha Rahman",role:"Lecturer",dept:"Business",email:"a.rahman@uni.edu",status:"Active",performance:78,engagement:65,risk:"High",joined:"2021-01-10",avatar:"AR"},
-    {id:4,name:"Mr. David Park",role:"Admin Officer",dept:"HR",email:"d.park@uni.edu",status:"Active",performance:90,engagement:91,risk:"Low",joined:"2018-06-20",avatar:"DP"},
-    {id:5,name:"Dr. Fatima Al-Zahra",role:"Research Fellow",dept:"Sciences",email:"f.alzahra@uni.edu",status:"On Leave",performance:88,engagement:80,risk:"Low",joined:"2020-09-05",avatar:"FA"},
-    {id:6,name:"Mr. Kevin Mensah",role:"IT Specialist",dept:"ICT",email:"k.mensah@uni.edu",status:"Active",performance:76,engagement:60,risk:"High",joined:"2022-02-14",avatar:"KM"},
+    {id:1,name:"Dr. Grace Wanjiku",role:"Associate Professor",dept:"Computer Science",email:"s.chen@uni.edu",status:"Active",performance:92,engagement:88,risk:"Low",joined:"2019-03-15",avatar:"GW"},
+    {id:2,name:"Prof. James Otieno",role:"Senior Lecturer",dept:"Engineering",email:"j.okafor@uni.edu",status:"Active",performance:85,engagement:72,risk:"Medium",joined:"2017-08-01",avatar:"JO"},
+    {id:3,name:"Dr. Amina Hassan",role:"Lecturer",dept:"Business",email:"a.rahman@uni.edu",status:"Active",performance:78,engagement:65,risk:"High",joined:"2021-01-10",avatar:"AH"},
+    {id:4,name:"Mr. David Mwangi",role:"Admin Officer",dept:"HR",email:"d.park@uni.edu",status:"Active",performance:90,engagement:91,risk:"Low",joined:"2018-06-20",avatar:"DM"},
+    {id:5,name:"Dr. Faith Chebet",role:"Research Fellow",dept:"Sciences",email:"f.alzahra@uni.edu",status:"On Leave",performance:88,engagement:80,risk:"Low",joined:"2020-09-05",avatar:"FC"},
+    {id:6,name:"Mr. Kevin Mutua",role:"IT Specialist",dept:"ICT",email:"k.mensah@uni.edu",status:"Active",performance:76,engagement:60,risk:"High",joined:"2022-02-14",avatar:"KM"},
   ],
   jobs: [
     {id:1,title:"Senior Lecturer – Data Science",dept:"Computer Science",type:"Full-time",posted:"2026-03-01",applicants:24,status:"Open"},
@@ -112,11 +112,11 @@ const DATA = {
     {id:4,title:"Finance Officer",dept:"Finance",type:"Full-time",posted:"2026-03-15",applicants:12,status:"Open"},
   ],
   applicants: [
-    {name:"Maria Santos",score:94,exp:"8 yrs",edu:"PhD",status:"Shortlisted"},
-    {name:"Ahmed Yusuf",score:89,exp:"6 yrs",edu:"MSc",status:"Shortlisted"},
-    {name:"Priya Nair",score:82,exp:"5 yrs",edu:"PhD",status:"Review"},
-    {name:"Tom Williams",score:75,exp:"4 yrs",edu:"MSc",status:"Review"},
-    {name:"Lena Müller",score:68,exp:"3 yrs",edu:"BSc",status:"Pending"},
+    {name:"Mary Achieng",score:94,exp:"8 yrs",edu:"PhD",status:"Shortlisted"},
+    {name:"Ahmed Abdullahi",score:89,exp:"6 yrs",edu:"MSc",status:"Shortlisted"},
+    {name:"Purity Njeri",score:82,exp:"5 yrs",edu:"PhD",status:"Review"},
+    {name:"Tom Kiptoo",score:75,exp:"4 yrs",edu:"MSc",status:"Review"},
+    {name:"Lilian Wambui",score:68,exp:"3 yrs",edu:"BSc",status:"Pending"},
   ],
   surveys: [
     {month:"Oct",positive:62,neutral:25,negative:13},
@@ -136,14 +136,14 @@ const DATA = {
     {dept:"HR",risk:7},{dept:"ICT",risk:35},
   ],
   leaveRequests: [
-    {id:1,emp:"Dr. Sarah Chen",type:"Annual Leave",from:"2026-04-01",to:"2026-04-05",days:5,status:"Approved"},
-    {id:2,emp:"Mr. Kevin Mensah",type:"Sick Leave",from:"2026-03-20",to:"2026-03-22",days:3,status:"Pending"},
-    {id:3,emp:"Dr. Aisha Rahman",type:"Study Leave",from:"2026-05-10",to:"2026-05-20",days:10,status:"Pending"},
+    {id:1,emp:"Dr. Grace Wanjiku",type:"Annual Leave",from:"2026-04-01",to:"2026-04-05",days:5,status:"Approved"},
+    {id:2,emp:"Mr. Kevin Mutua",type:"Sick Leave",from:"2026-03-20",to:"2026-03-22",days:3,status:"Pending"},
+    {id:3,emp:"Dr. Amina Hassan",type:"Study Leave",from:"2026-05-10",to:"2026-05-20",days:10,status:"Pending"},
   ],
   onboarding: [
     {
-      id:1, empId:5, name:"Dr. Fatima Al-Zahra", role:"Research Fellow", dept:"Sciences",
-      startDate:"2026-03-10", buddy:"Dr. Sarah Chen", status:"In Progress",
+      id:1, empId:5, name:"Dr. Faith Chebet", role:"Research Fellow", dept:"Sciences",
+      startDate:"2026-03-10", buddy:"Dr. Grace Wanjiku", status:"In Progress",
       steps:[
         {id:1,title:"Offer Letter & Contract Signed",     category:"Documentation", done:true,  doneDate:"2026-03-08"},
         {id:2,title:"ID & Credentials Verified",          category:"Documentation", done:true,  doneDate:"2026-03-09"},
@@ -160,8 +160,8 @@ const DATA = {
       ]
     },
     {
-      id:2, empId:6, name:"Mr. Kevin Mensah", role:"IT Specialist", dept:"ICT",
-      startDate:"2026-02-14", buddy:"Mr. David Park", status:"In Progress",
+      id:2, empId:6, name:"Mr. Kevin Mutua", role:"IT Specialist", dept:"ICT",
+      startDate:"2026-02-14", buddy:"Mr. David Mwangi", status:"In Progress",
       steps:[
         {id:1,title:"Offer Letter & Contract Signed",     category:"Documentation", done:true,  doneDate:"2026-02-12"},
         {id:2,title:"ID & Credentials Verified",          category:"Documentation", done:true,  doneDate:"2026-02-13"},
@@ -178,8 +178,8 @@ const DATA = {
       ]
     },
     {
-      id:3, empId:3, name:"Dr. Aisha Rahman", role:"Lecturer", dept:"Business",
-      startDate:"2026-01-10", buddy:"Prof. James Okafor", status:"Completed",
+      id:3, empId:3, name:"Dr. Amina Hassan", role:"Lecturer", dept:"Business",
+      startDate:"2026-01-10", buddy:"Prof. James Otieno", status:"Completed",
       steps:[
         {id:1,title:"Offer Letter & Contract Signed",     category:"Documentation", done:true,  doneDate:"2026-01-08"},
         {id:2,title:"ID & Credentials Verified",          category:"Documentation", done:true,  doneDate:"2026-01-09"},
@@ -205,11 +205,11 @@ let sidebarCollapsed = false;
 
 /* ===== CREDENTIALS STORE ===== */
 const USERS = [
-  { email: 'admin@university.edu',    password: 'Admin@2026',   role: 'admin',    name: 'Admin User',    avatar: 'AU' },
-  { email: 'hr@university.edu',       password: 'HRManager@2026', role: 'hr',     name: 'HR Manager',    avatar: 'HM' },
-  { email: 's.chen@uni.edu',          password: 'Sarah@2026',   role: 'employee', name: 'Dr. Sarah Chen', avatar: 'SC' },
-  { email: 'j.okafor@uni.edu',        password: 'James@2026',   role: 'employee', name: 'Prof. James Okafor', avatar: 'JO' },
-  { email: 'd.park@uni.edu',          password: 'David@2026',   role: 'employee', name: 'Mr. David Park', avatar: 'DP' },
+  { email: 'admin@university.edu',    password: 'Admin@2026',   role: 'admin',    name: 'Peter Kamau',    avatar: 'PK' },
+  { email: 'hr@university.edu',       password: 'HRManager@2026', role: 'hr',     name: 'Elizabeth Nyambura',    avatar: 'EN' },
+  { email: 's.chen@uni.edu',          password: 'Sarah@2026',   role: 'employee', name: 'Dr. Grace Wanjiku', avatar: 'GW' },
+  { email: 'j.okafor@uni.edu',        password: 'James@2026',   role: 'employee', name: 'Prof. James Otieno', avatar: 'JO' },
+  { email: 'd.park@uni.edu',          password: 'David@2026',   role: 'employee', name: 'Mr. David Mwangi', avatar: 'DM' },
 ];
 
 /* ===== AUTH ===== */
