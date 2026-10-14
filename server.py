@@ -10,9 +10,10 @@ import threading
 import urllib.error
 import urllib.parse
 import urllib.request
+import workflows
 
 ROOT = Path(__file__).resolve().parent
-PUBLIC_FILES = {'/', '/index.html', '/app.js', '/styles.css', '/test_gemini.html', '/hrimara-logo.png'}
+PUBLIC_FILES = {'/', '/index.html', '/app.js', '/styles.css', '/test_gemini.html', '/hrimara-logo.png', '/lifecycle.js', '/careers', '/careers.html'}
 
 
 def request_gemini(request):
@@ -45,6 +46,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.connection.settimeout(30)
 
     def send_head(self):
+        if urllib.parse.urlsplit(self.path).path == '/careers':
+            self.path = '/careers.html'
         if urllib.parse.urlsplit(self.path).path == '/hrimara-logo.png':
             asset = ROOT / 'hrimara-logo.png'
             self.send_response(200)
@@ -63,6 +66,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Content-Type', 'application/json; charset=utf-8')
         self.send_header('Content-Length', str(len(body)))
         self.send_header('Cache-Control', 'no-store')
+        if getattr(self, 'extra_cookie', None):
+            self.send_header('Set-Cookie', self.extra_cookie)
         self.end_headers()
         self.wfile.write(body)
 
@@ -70,8 +75,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.reply(status, {'error': {'code': status, 'message': message}})
 
     def do_POST(self):
+        if workflows.dispatch(self, 'POST', urllib.parse.urlsplit(self.path).path):
+            return
         if urllib.parse.urlsplit(self.path).path != '/api/gemini':
             self.error(404, 'Unknown API endpoint')
+            return
+        if not workflows.authorize_ai(self):
             return
         try:
             length = int(self.headers.get('Content-Length', '0'))
@@ -126,12 +135,19 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         except (urllib.error.URLError, TimeoutError, OSError, ValueError):
             self.error(502, 'AI provider is unavailable; try again later')
 
+    def do_GET(self):
+        if urllib.parse.urlsplit(self.path).path == '/api/health':
+            self.reply(200, {'version':'vercel-attendance-2','hosting':'vercel' if os.environ.get('VERCEL') else 'local','databaseConfigured':bool(os.environ.get('DATABASE_URL') or os.environ.get('POSTGRES_URL')) if os.environ.get('VERCEL') else True})
+            return
+        if not workflows.dispatch(self, 'GET', urllib.parse.urlsplit(self.path).path):
+            super().do_GET()
+
 def main():
     config = ROOT / '.env'
     if config.is_file():
         for line in config.read_text(encoding='utf-8-sig').splitlines():
             name, separator, value = line.partition('=')
-            if separator and name.strip() in {'GEMINI_API_KEY', 'GEMINI_MODEL', 'PORT'}:
+            if separator and name.strip() in {'GEMINI_API_KEY', 'GEMINI_MODEL', 'PORT', 'GMAIL_ADDRESS', 'GMAIL_APP_PASSWORD'}:
                 os.environ.setdefault(name.strip(), value.strip().strip('\"\''))
     try:
         port = int(os.environ.get('PORT', '8080'))

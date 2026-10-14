@@ -1,0 +1,9 @@
+.env*
+*.sqlite3*
+private_uploads/
+__pycache__/
+*.log
+test_*
+*-preview.png
+ai-insight-popup.png
+leave-charts-preview.png

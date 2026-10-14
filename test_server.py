@@ -7,24 +7,33 @@ import urllib.error
 import urllib.request
 from unittest.mock import patch
 import server
+import tempfile
+from pathlib import Path
+import workflows
 
 class BackendTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        cls.temp=tempfile.TemporaryDirectory()
+        cls.dbpatch=patch.object(workflows,'DB',Path(cls.temp.name)/'test.sqlite3');cls.dbpatch.start()
+        cls.envpatch=patch.dict(os.environ,{'DATABASE_URL':'','POSTGRES_URL':'','VERCEL':''});cls.envpatch.start()
         cls.httpd = server.http.server.ThreadingHTTPServer(('127.0.0.1', 0), server.Handler)
         cls.thread = threading.Thread(target=cls.httpd.serve_forever, daemon=True)
         cls.thread.start()
         cls.base = f'http://127.0.0.1:{cls.httpd.server_port}'
+        request=urllib.request.Request(cls.base+'/api/work/login',data=json.dumps({'email':'admin@university.edu','password':'Admin@2026','role':'admin'}).encode(),headers={'Content-Type':'application/json'})
+        with urllib.request.urlopen(request) as response: cls.cookie=response.headers['Set-Cookie'].split(';')[0]
 
     @classmethod
     def tearDownClass(cls):
         cls.httpd.shutdown()
         cls.httpd.server_close()
         cls.thread.join()
+        cls.dbpatch.stop();cls.envpatch.stop();cls.temp.cleanup()
 
     def request(self, path, body=None):
         req = urllib.request.Request(self.base + path, data=body,
-                                     headers={'Content-Type': 'application/json'})
+                                     headers={'Content-Type': 'application/json','Cookie':self.cookie})
         try:
             with urllib.request.urlopen(req, timeout=3) as res:
                 return res.status, res.read()

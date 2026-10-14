@@ -1,0 +1,610 @@
+{
+  "data": {
+    "employees": [
+      {
+        "id": 1,
+        "name": "Dr. Grace Wanjiku",
+        "role": "Associate Professor",
+        "dept": "Computer Science",
+        "email": "s.chen@uni.edu",
+        "status": "Active",
+        "performance": 92,
+        "engagement": 88,
+        "risk": "Low",
+        "joined": "2019-03-15",
+        "avatar": "GW"
+      },
+      {
+        "id": 2,
+        "name": "Prof. James Otieno",
+        "role": "Senior Lecturer",
+        "dept": "Engineering",
+        "email": "j.okafor@uni.edu",
+        "status": "Active",
+        "performance": 85,
+        "engagement": 72,
+        "risk": "Medium",
+        "joined": "2017-08-01",
+        "avatar": "JO"
+      },
+      {
+        "id": 3,
+        "name": "Dr. Amina Hassan",
+        "role": "Lecturer",
+        "dept": "Business",
+        "email": "a.rahman@uni.edu",
+        "status": "Active",
+        "performance": 78,
+        "engagement": 65,
+        "risk": "High",
+        "joined": "2021-01-10",
+        "avatar": "AH"
+      },
+      {
+        "id": 4,
+        "name": "Mr. David Mwangi",
+        "role": "Admin Officer",
+        "dept": "HR",
+        "email": "d.park@uni.edu",
+        "status": "Active",
+        "performance": 90,
+        "engagement": 91,
+        "risk": "Low",
+        "joined": "2018-06-20",
+        "avatar": "DM"
+      },
+      {
+        "id": 5,
+        "name": "Dr. Faith Chebet",
+        "role": "Research Fellow",
+        "dept": "Sciences",
+        "email": "f.alzahra@uni.edu",
+        "status": "On Leave",
+        "performance": 88,
+        "engagement": 80,
+        "risk": "Low",
+        "joined": "2020-09-05",
+        "avatar": "FC"
+      },
+      {
+        "id": 6,
+        "name": "Mr. Kevin Mutua",
+        "role": "IT Specialist",
+        "dept": "ICT",
+        "email": "k.mensah@uni.edu",
+        "status": "Active",
+        "performance": 76,
+        "engagement": 60,
+        "risk": "High",
+        "joined": "2022-02-14",
+        "avatar": "KM"
+      }
+    ],
+    "jobs": [
+      {
+        "id": 1,
+        "title": "Senior Lecturer – Data Science",
+        "dept": "Computer Science",
+        "type": "Full-time",
+        "posted": "2026-03-01",
+        "applicants": 24,
+        "status": "Open"
+      },
+      {
+        "id": 2,
+        "title": "HR Business Partner",
+        "dept": "Human Resources",
+        "type": "Full-time",
+        "posted": "2026-03-10",
+        "applicants": 18,
+        "status": "Open"
+      },
+      {
+        "id": 3,
+        "title": "Research Assistant",
+        "dept": "Sciences",
+        "type": "Part-time",
+        "posted": "2026-02-20",
+        "applicants": 31,
+        "status": "Screening"
+      },
+      {
+        "id": 4,
+        "title": "Finance Officer",
+        "dept": "Finance",
+        "type": "Full-time",
+        "posted": "2026-03-15",
+        "applicants": 12,
+        "status": "Open"
+      }
+    ],
+    "applicants": [
+      {
+        "name": "Mary Achieng",
+        "score": 94,
+        "exp": "8 yrs",
+        "edu": "PhD",
+        "status": "Shortlisted"
+      },
+      {
+        "name": "Ahmed Abdullahi",
+        "score": 89,
+        "exp": "6 yrs",
+        "edu": "MSc",
+        "status": "Shortlisted"
+      },
+      {
+        "name": "Purity Njeri",
+        "score": 82,
+        "exp": "5 yrs",
+        "edu": "PhD",
+        "status": "Review"
+      },
+      {
+        "name": "Tom Kiptoo",
+        "score": 75,
+        "exp": "4 yrs",
+        "edu": "MSc",
+        "status": "Review"
+      },
+      {
+        "name": "Lilian Wambui",
+        "score": 68,
+        "exp": "3 yrs",
+        "edu": "BSc",
+        "status": "Pending"
+      }
+    ],
+    "surveys": [
+      {
+        "month": "Oct",
+        "positive": 62,
+        "neutral": 25,
+        "negative": 13
+      },
+      {
+        "month": "Nov",
+        "positive": 58,
+        "neutral": 28,
+        "negative": 14
+      },
+      {
+        "month": "Dec",
+        "positive": 65,
+        "neutral": 22,
+        "negative": 13
+      },
+      {
+        "month": "Jan",
+        "positive": 70,
+        "neutral": 20,
+        "negative": 10
+      },
+      {
+        "month": "Feb",
+        "positive": 68,
+        "neutral": 24,
+        "negative": 8
+      },
+      {
+        "month": "Mar",
+        "positive": 74,
+        "neutral": 18,
+        "negative": 8
+      }
+    ],
+    "performance": [
+      {
+        "month": "Oct",
+        "avg": 76
+      },
+      {
+        "month": "Nov",
+        "avg": 78
+      },
+      {
+        "month": "Dec",
+        "avg": 75
+      },
+      {
+        "month": "Jan",
+        "avg": 80
+      },
+      {
+        "month": "Feb",
+        "avg": 83
+      },
+      {
+        "month": "Mar",
+        "avg": 85
+      }
+    ],
+    "turnoverRisk": [
+      {
+        "dept": "Computer Science",
+        "risk": 12
+      },
+      {
+        "dept": "Engineering",
+        "risk": 18
+      },
+      {
+        "dept": "Business",
+        "risk": 28
+      },
+      {
+        "dept": "Sciences",
+        "risk": 9
+      },
+      {
+        "dept": "HR",
+        "risk": 7
+      },
+      {
+        "dept": "ICT",
+        "risk": 35
+      }
+    ],
+    "leaveRequests": [
+      {
+        "id": 1,
+        "emp": "Dr. Grace Wanjiku",
+        "type": "Annual Leave",
+        "from": "2026-04-01",
+        "to": "2026-04-05",
+        "days": 5,
+        "status": "Approved"
+      },
+      {
+        "id": 2,
+        "emp": "Mr. Kevin Mutua",
+        "type": "Sick Leave",
+        "from": "2026-03-20",
+        "to": "2026-03-22",
+        "days": 3,
+        "status": "Pending"
+      },
+      {
+        "id": 3,
+        "emp": "Dr. Amina Hassan",
+        "type": "Study Leave",
+        "from": "2026-05-10",
+        "to": "2026-05-20",
+        "days": 10,
+        "status": "Pending"
+      }
+    ],
+    "onboarding": [
+      {
+        "id": 1,
+        "empId": 5,
+        "name": "Dr. Faith Chebet",
+        "role": "Research Fellow",
+        "dept": "Sciences",
+        "startDate": "2026-03-10",
+        "buddy": "Dr. Grace Wanjiku",
+        "status": "In Progress",
+        "steps": [
+          {
+            "id": 1,
+            "title": "Offer Letter & Contract Signed",
+            "category": "Documentation",
+            "done": true,
+            "doneDate": "2026-03-08"
+          },
+          {
+            "id": 2,
+            "title": "ID & Credentials Verified",
+            "category": "Documentation",
+            "done": true,
+            "doneDate": "2026-03-09"
+          },
+          {
+            "id": 3,
+            "title": "IT Account & Email Setup",
+            "category": "IT Setup",
+            "done": true,
+            "doneDate": "2026-03-10"
+          },
+          {
+            "id": 4,
+            "title": "VPN & System Access Granted",
+            "category": "IT Setup",
+            "done": true,
+            "doneDate": "2026-03-10"
+          },
+          {
+            "id": 5,
+            "title": "HR Orientation Session",
+            "category": "Orientation",
+            "done": true,
+            "doneDate": "2026-03-11"
+          },
+          {
+            "id": 6,
+            "title": "University Policies Briefing",
+            "category": "Orientation",
+            "done": true,
+            "doneDate": "2026-03-11"
+          },
+          {
+            "id": 7,
+            "title": "Department Induction Meeting",
+            "category": "Induction",
+            "done": true,
+            "doneDate": "2026-03-13"
+          },
+          {
+            "id": 8,
+            "title": "Meet Buddy / Mentor Assigned",
+            "category": "Induction",
+            "done": false,
+            "doneDate": null
+          },
+          {
+            "id": 9,
+            "title": "Mandatory Training Enrolled",
+            "category": "Training",
+            "done": false,
+            "doneDate": null
+          },
+          {
+            "id": 10,
+            "title": "Health & Safety Training",
+            "category": "Training",
+            "done": false,
+            "doneDate": null
+          },
+          {
+            "id": 11,
+            "title": "30-Day Check-in with Manager",
+            "category": "Review",
+            "done": false,
+            "doneDate": null
+          },
+          {
+            "id": 12,
+            "title": "90-Day Performance Review",
+            "category": "Review",
+            "done": false,
+            "doneDate": null
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "empId": 6,
+        "name": "Mr. Kevin Mutua",
+        "role": "IT Specialist",
+        "dept": "ICT",
+        "startDate": "2026-02-14",
+        "buddy": "Mr. David Mwangi",
+        "status": "In Progress",
+        "steps": [
+          {
+            "id": 1,
+            "title": "Offer Letter & Contract Signed",
+            "category": "Documentation",
+            "done": true,
+            "doneDate": "2026-02-12"
+          },
+          {
+            "id": 2,
+            "title": "ID & Credentials Verified",
+            "category": "Documentation",
+            "done": true,
+            "doneDate": "2026-02-13"
+          },
+          {
+            "id": 3,
+            "title": "IT Account & Email Setup",
+            "category": "IT Setup",
+            "done": true,
+            "doneDate": "2026-02-14"
+          },
+          {
+            "id": 4,
+            "title": "VPN & System Access Granted",
+            "category": "IT Setup",
+            "done": true,
+            "doneDate": "2026-02-14"
+          },
+          {
+            "id": 5,
+            "title": "HR Orientation Session",
+            "category": "Orientation",
+            "done": true,
+            "doneDate": "2026-02-15"
+          },
+          {
+            "id": 6,
+            "title": "University Policies Briefing",
+            "category": "Orientation",
+            "done": true,
+            "doneDate": "2026-02-15"
+          },
+          {
+            "id": 7,
+            "title": "Department Induction Meeting",
+            "category": "Induction",
+            "done": true,
+            "doneDate": "2026-02-17"
+          },
+          {
+            "id": 8,
+            "title": "Meet Buddy / Mentor Assigned",
+            "category": "Induction",
+            "done": true,
+            "doneDate": "2026-02-17"
+          },
+          {
+            "id": 9,
+            "title": "Mandatory Training Enrolled",
+            "category": "Training",
+            "done": true,
+            "doneDate": "2026-02-20"
+          },
+          {
+            "id": 10,
+            "title": "Health & Safety Training",
+            "category": "Training",
+            "done": true,
+            "doneDate": "2026-02-21"
+          },
+          {
+            "id": 11,
+            "title": "30-Day Check-in with Manager",
+            "category": "Review",
+            "done": true,
+            "doneDate": "2026-03-14"
+          },
+          {
+            "id": 12,
+            "title": "90-Day Performance Review",
+            "category": "Review",
+            "done": false,
+            "doneDate": null
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "empId": 3,
+        "name": "Dr. Amina Hassan",
+        "role": "Lecturer",
+        "dept": "Business",
+        "startDate": "2026-01-10",
+        "buddy": "Prof. James Otieno",
+        "status": "Completed",
+        "steps": [
+          {
+            "id": 1,
+            "title": "Offer Letter & Contract Signed",
+            "category": "Documentation",
+            "done": true,
+            "doneDate": "2026-01-08"
+          },
+          {
+            "id": 2,
+            "title": "ID & Credentials Verified",
+            "category": "Documentation",
+            "done": true,
+            "doneDate": "2026-01-09"
+          },
+          {
+            "id": 3,
+            "title": "IT Account & Email Setup",
+            "category": "IT Setup",
+            "done": true,
+            "doneDate": "2026-01-10"
+          },
+          {
+            "id": 4,
+            "title": "VPN & System Access Granted",
+            "category": "IT Setup",
+            "done": true,
+            "doneDate": "2026-01-10"
+          },
+          {
+            "id": 5,
+            "title": "HR Orientation Session",
+            "category": "Orientation",
+            "done": true,
+            "doneDate": "2026-01-11"
+          },
+          {
+            "id": 6,
+            "title": "University Policies Briefing",
+            "category": "Orientation",
+            "done": true,
+            "doneDate": "2026-01-11"
+          },
+          {
+            "id": 7,
+            "title": "Department Induction Meeting",
+            "category": "Induction",
+            "done": true,
+            "doneDate": "2026-01-13"
+          },
+          {
+            "id": 8,
+            "title": "Meet Buddy / Mentor Assigned",
+            "category": "Induction",
+            "done": true,
+            "doneDate": "2026-01-13"
+          },
+          {
+            "id": 9,
+            "title": "Mandatory Training Enrolled",
+            "category": "Training",
+            "done": true,
+            "doneDate": "2026-01-15"
+          },
+          {
+            "id": 10,
+            "title": "Health & Safety Training",
+            "category": "Training",
+            "done": true,
+            "doneDate": "2026-01-16"
+          },
+          {
+            "id": 11,
+            "title": "30-Day Check-in with Manager",
+            "category": "Review",
+            "done": true,
+            "doneDate": "2026-02-10"
+          },
+          {
+            "id": 12,
+            "title": "90-Day Performance Review",
+            "category": "Review",
+            "done": true,
+            "doneDate": "2026-04-10"
+          }
+        ]
+      }
+    ]
+  },
+  "users": [
+    {
+      "email": "admin@university.edu",
+      "role": "admin",
+      "name": "Peter Kamau",
+      "avatar": "PK",
+      "salt": "63e511afe3f76bbf1f2ad6f1e9070f41",
+      "hash": "dce438a3712157e0ccec458db50e935d63ff2639302de2ff9fbd016dfd4788df"
+    },
+    {
+      "email": "hr@university.edu",
+      "role": "hr",
+      "name": "Elizabeth Nyambura",
+      "avatar": "EN",
+      "salt": "39e520ad194211f8ebbb68f1cf692774",
+      "hash": "f2cd1d834660335a7e6897227d221d6d4d1e9c6d863c96be3e06376952409efd"
+    },
+    {
+      "email": "s.chen@uni.edu",
+      "role": "employee",
+      "name": "Dr. Grace Wanjiku",
+      "avatar": "GW",
+      "salt": "52a11fb78ed95433a8c6e5e0ddfa8d61",
+      "hash": "53d82a8905972373c1f7754073b96bed4f68e90e511145eb4365f05d7aaf89ff"
+    },
+    {
+      "email": "j.okafor@uni.edu",
+      "role": "employee",
+      "name": "Prof. James Otieno",
+      "avatar": "JO",
+      "salt": "3e729e2b3542362a6e717b3615e2fd61",
+      "hash": "0867fc0343a428fede0d2354a57fbb94add4f5c956a7b10f9f4dcd6a64e3b9c4"
+    },
+    {
+      "email": "d.park@uni.edu",
+      "role": "employee",
+      "name": "Mr. David Mwangi",
+      "avatar": "DM",
+      "salt": "68247694391cdfc7b818e339e16b6bf7",
+      "hash": "edd8552b663017602ab7063e68d69a7290ae698c1e5de138a7074c81b08eb507"
+    }
+  ]
+}

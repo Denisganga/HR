@@ -204,16 +204,10 @@ let charts = {};
 let sidebarCollapsed = false;
 
 /* ===== CREDENTIALS STORE ===== */
-const USERS = [
-  { email: 'admin@university.edu',    password: 'Admin@2026',   role: 'admin',    name: 'Peter Kamau',    avatar: 'PK' },
-  { email: 'hr@university.edu',       password: 'HRManager@2026', role: 'hr',     name: 'Elizabeth Nyambura',    avatar: 'EN' },
-  { email: 's.chen@uni.edu',          password: 'Sarah@2026',   role: 'employee', name: 'Dr. Grace Wanjiku', avatar: 'GW' },
-  { email: 'j.okafor@uni.edu',        password: 'James@2026',   role: 'employee', name: 'Prof. James Otieno', avatar: 'JO' },
-  { email: 'd.park@uni.edu',          password: 'David@2026',   role: 'employee', name: 'Mr. David Mwangi', avatar: 'DM' },
-];
+// User accounts and password hashes are managed by the backend.
 
 /* ===== AUTH ===== */
-function doLogin() {
+async function doLogin() {
   const email    = document.getElementById('loginEmail').value.trim().toLowerCase();
   const password = document.getElementById('loginPassword').value;
   const role     = document.getElementById('loginRole').value;
@@ -225,7 +219,9 @@ function doLogin() {
     return;
   }
 
-  const match = USERS.find(u => u.email.toLowerCase() === email && u.password === password && u.role === role);
+  let match;
+  try { const response = await workAPI('login', {email,password,role}); applyWork(response); match = response.user; }
+  catch (error) { showLoginError(error.message); shakeLoginCard(); return; }
 
   if (!match) {
     showLoginError('Invalid credentials. Check your email, password, and role.');
@@ -651,10 +647,10 @@ function renderDashboard() {
 /* ===== EMPLOYEES PAGE ===== */
 function renderEmployees() {
   const cards = DATA.employees.map(e => `
-    <div class="employee-card animate-in">
+    <div class="employee-card animate-in" data-department="${leaveEscape(e.dept)}">
       <div class="emp-avatar">${e.avatar}</div>
       <div class="emp-name">${e.name}</div>
-      <div class="emp-role">${e.role} · ${e.dept}</div>
+      <div class="emp-role">${leaveEscape(e.role)} · ${leaveEscape(e.dept)}</div>
       <div style="margin-bottom:12px"><span class="tag ${e.status==='Active'?'tag-green':'tag-yellow'}">${e.status}</span></div>
       <div class="emp-stats">
         <div class="emp-stat"><div class="emp-stat-val">${e.performance}%</div><div class="emp-stat-lbl">Performance</div></div>
@@ -676,8 +672,7 @@ function renderEmployees() {
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
       <select style="padding:8px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;" onchange="filterEmployees(this.value)">
         <option value="">All Departments</option>
-        <option>Computer Science</option><option>Engineering</option>
-        <option>Business</option><option>Sciences</option><option>HR</option><option>ICT</option>
+        ${[...new Set(DATA.employees.map(e=>e.dept))].map(d=>`<option>${leaveEscape(d)}</option>`).join('')}
       </select>
       <button class="btn-primary" onclick="showAddEmployee()">+ Add Employee</button>
     </div>
@@ -692,10 +687,10 @@ function viewEmployee(id) {
     <div class="modal-header"><h3 class="modal-title">Employee Profile</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
     <div style="text-align:center;margin-bottom:24px;">
       <div class="emp-avatar" style="width:80px;height:80px;font-size:32px;margin:0 auto 12px;">${e.avatar}</div>
-      <h3>${e.name}</h3><p style="color:var(--text2)">${e.role} · ${e.dept}</p>
+      <h3>${e.name}</h3><p style="color:var(--text2)">${leaveEscape(e.role)} · ${leaveEscape(e.dept)}</p>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-      <div><label style="font-size:12px;color:var(--text3)">Email</label><p style="font-size:14px">${e.email}</p></div>
+      <div><label style="font-size:12px;color:var(--text3)">Email</label><p style="font-size:14px">${leaveEscape(e.email)}</p></div>
       <div><label style="font-size:12px;color:var(--text3)">Joined</label><p style="font-size:14px">${e.joined}</p></div>
       <div><label style="font-size:12px;color:var(--text3)">Status</label><p><span class="tag ${e.status==='Active'?'tag-green':'tag-yellow'}">${e.status}</span></p></div>
       <div><label style="font-size:12px;color:var(--text3)">Turnover Risk</label><p><span class="tag ${e.risk==='Low'?'tag-green':e.risk==='Medium'?'tag-yellow':'tag-red'}">${e.risk}</span></p></div>
@@ -780,8 +775,8 @@ function showEmployeeReviewDetails(empId) {
       <div class="emp-avatar" style="width:52px;height:52px;font-size:18px;flex-shrink:0">${e.avatar}</div>
       <div style="flex:1">
         <div style="font-weight:700;font-size:15px">${e.name}</div>
-        <div style="font-size:13px;color:var(--text2)">${e.role} · ${e.dept}</div>
-        <div style="font-size:12px;color:var(--text3)">Joined ${e.joined} · ${e.email}</div>
+        <div style="font-size:13px;color:var(--text2)">${leaveEscape(e.role)} · ${leaveEscape(e.dept)}</div>
+        <div style="font-size:12px;color:var(--text3)">Joined ${e.joined} · ${leaveEscape(e.email)}</div>
       </div>
       <span style="padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;background:${statusColor}22;color:${statusColor}">${status}</span>
     </div>
@@ -892,7 +887,7 @@ function exportPerformancePDF() {
   const avgPerf = emps.length ? Math.round(emps.reduce((s,e)=>s+e.performance,0)/emps.length) : 0;
   const rows = emps.map(e => `
     <tr>
-      <td>${e.name}</td><td>${e.role}</td><td>${e.dept}</td>
+      <td>${e.name}</td><td>${leaveEscape(e.role)}</td><td>${leaveEscape(e.dept)}</td>
       <td>${e.performance}%</td><td>${e.engagement}%</td>
       <td>${e.risk}</td><td>${e.performance>80?'Completed':'In Review'}</td>
     </tr>`).join('');
@@ -987,7 +982,7 @@ function renderRecruitment() {
       <div class="card-title">🤖 AI Candidate Ranking — Senior Lecturer – Data Science</div>
       <span class="tag tag-blue">AI Screened</span>
     </div>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">AI analyzed resumes, experience, and qualifications. Scores out of 100.</p>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Assessment scores support manual review. Scores out of 100.</p>
     ${DATA.applicants.map((a,i) => `
       <div class="applicant-row animate-in" style="animation-delay:${i*.08}s">
         <div class="applicant-score">${a.score}</div>
@@ -1229,7 +1224,7 @@ function markOnboardingComplete(id) {
 function startNewOnboarding() {
   const unboarded = DATA.employees.filter(e => !DATA.onboarding.find(o=>o.empId===e.id));
   const options   = unboarded.length
-    ? unboarded.map(e=>`<option value="${e.id}">${e.name} — ${e.role}, ${e.dept}</option>`).join('')
+    ? unboarded.map(e=>`<option value="${e.id}">${e.name} — ${leaveEscape(e.role)}, ${leaveEscape(e.dept)}</option>`).join('')
     : `<option disabled>All employees have onboarding records</option>`;
 
   showModal(`
@@ -1408,8 +1403,8 @@ function renderPerformance() {
         <tbody>
           ${DATA.employees.map(e=>`
             <tr>
-              <td><div style="font-weight:600">${e.name}</div><div style="font-size:12px;color:var(--text2)">${e.role}</div></td>
-              <td>${e.dept}</td>
+              <td><div style="font-weight:600">${e.name}</div><div style="font-size:12px;color:var(--text2)">${leaveEscape(e.role)}</div></td>
+              <td>${leaveEscape(e.dept)}</td>
               <td>
                 <div style="display:flex;align-items:center;gap:8px">
                   <span style="font-weight:700;color:var(--primary)">${e.performance}%</span>
@@ -1589,7 +1584,7 @@ function leaveEscape(value) {
 function computeLeaveAnalysis(requests, period = 'all', now = new Date()) {
   const end = new Date(now); end.setUTCHours(23,59,59,999);
   const start = new Date(end); start.setUTCDate(start.getUTCDate() - 89); start.setUTCHours(0,0,0,0);
-  const rows = requests.filter(r => r.status !== 'Rejected' && (period === 'all' ||
+  const rows = requests.filter(r => !['Rejected','Cancelled'].includes(r.status) && (period === 'all' ||
     (new Date(r.from + 'T00:00:00Z') <= end && new Date(r.to + 'T00:00:00Z') >= start)));
   const counts = Object.fromEntries(LEAVE_DRIVERS.map(d => [d.id, 0]));
   const types = {};
@@ -1646,7 +1641,7 @@ function initLeaveCharts() {
   if (type && s.total) charts.leaveTypeChart = new Chart(type,{type:'doughnut',data:{labels:Object.keys(s.types),datasets:[{data:Object.values(s.types),backgroundColor:colors,borderWidth:0}]},options:{...base,cutout:'72%',plugins:{...base.plugins,legend:{position:'bottom'}}}});
   const drivers = document.getElementById('leaveDriverChart');
   if (drivers && s.total) charts.leaveDriverChart = new Chart(drivers,{type:'bar',data:{labels:LEAVE_DRIVERS.map(d=>d.label),datasets:[{label:'Requests',data:LEAVE_DRIVERS.map(d=>s.counts[d.id]),backgroundColor:colors,borderRadius:6}]},options:{...base,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,ticks:{precision:0,color:'#64748b'},grid:{color:'rgba(148,163,184,.12)'}},y:{ticks:{color:'#64748b',font:{size:11}},grid:{display:false}}}}});
-  const rows = DATA.leaveRequests.filter(r=>r.status!=='Rejected');
+  const rows = DATA.leaveRequests.filter(r=>!['Rejected','Cancelled'].includes(r.status));
   const today = new Date();
   const valid = rows.map(r=>r.from).filter(d=>/^\d{4}-\d{2}-\d{2}$/.test(d)).sort();
   const end = period === '90' || !valid.length ? today : new Date(valid[valid.length-1]+'T00:00:00Z');
@@ -1795,7 +1790,7 @@ function generateRecommendations() {
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <span style="font-size:20px">🧠</span>
         <div><div style="font-size:13px;font-weight:700">AI Recommendation</div><div style="font-size:11px;color:var(--text3)">${e.name}</div></div>
-        <span class="tag tag-blue" style="margin-left:auto">${e.dept}</span>
+        <span class="tag tag-blue" style="margin-left:auto">${leaveEscape(e.dept)}</span>
       </div>
       <p style="font-size:13px;color:var(--text2);line-height:1.5">${(fallbacks[e.risk] || fallbacks['Medium'])(e)}</p>
       <button class="btn-primary btn-sm" style="margin-top:12px" onclick="getAIRecommendation(${e.id}, this)">✨ Get AI Insight</button>
@@ -1815,7 +1810,7 @@ function getAIRecommendation(empId) {
   </div>`);
   const result = document.getElementById('recommendationResult');
   document.querySelector('#modalOverlay .modal-close')?.focus();
-  const prompt = `HR coaching assistant: ${e.role}, KPI ${e.performance}%, Engagement ${e.engagement}%. Give one supportive actionable suggestion and one question for a check-in in 2-3 short sentences. Do not make promotion, termination or other employment decisions; do not diagnose health conditions. Plain text only.`;
+  const prompt = `HR coaching assistant: ${leaveEscape(e.role)}, KPI ${e.performance}%, Engagement ${e.engagement}%. Give one supportive actionable suggestion and one question for a check-in in 2-3 short sentences. Do not make promotion, termination or other employment decisions; do not diagnose health conditions. Plain text only.`;
   geminiDirect(prompt).then(text => {
     if (!result.isConnected) return;
     result.innerHTML = '<span class="tag tag-blue">AI suggestion</span><p></p>';
@@ -1853,8 +1848,8 @@ function renderSelfService() {
   <div class="service-grid">
     ${[
       {icon:'🏖️',label:'Apply for Leave',action:"showLeaveForm()"},
-      {icon:'👤',label:'Update Profile',action:"showToast('Profile editor opened!')"},
-      {icon:'📄',label:'View Payslip',action:"showToast('Payslip downloaded!')"},
+      {icon:'👤',label:'Update Profile',action:"editMyProfile()"},
+      {icon:'📄',label:'Hours & Earnings Statement',action:"showEarningsStatement()"},
       {icon:'📋',label:'My Requests',action:"showMyRequests()"},
       {icon:'🎓',label:'Training Catalog',action:"showTraining()"},
       {icon:'📊',label:'My Performance',action:"navigate('performance')"},
@@ -2064,7 +2059,7 @@ function initPageCharts(page) {
       const latest = DATA.surveys.length ? DATA.surveys[DATA.surveys.length-1] : null;
 
       const p = document.getElementById('dash-ai-prediction');
-      if(p) p.innerHTML = `<strong>${topRisk.dept}</strong> shows the highest turnover risk at <strong>${topRisk.risk}%</strong>. Recommend immediate engagement intervention.`;
+      if(p) p.innerHTML = topRisk ? `<strong>${topRisk.dept}</strong> shows the highest turnover risk at <strong>${topRisk.risk}%</strong>. Recommend immediate engagement intervention.` : 'No turnover risk data has been recorded.';
       const s2 = document.getElementById('dash-ai-sentiment');
       if(s2) s2.innerHTML = latest ? `Latest survey: <strong>${latest.positive}% positive</strong>, ${latest.neutral}% neutral, ${latest.negative}% negative.` : 'No survey data available yet.';
       const rec = document.getElementById('dash-ai-recommendation');
